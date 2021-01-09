@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>0.
+    <meta charset="utf-8">
+    <title>Siv's Matching game</title>
+    <style>
+        img {
+            position: absolute;
+            box-sizing: border-box;
+            size: 200px;
+        }
+
+        div {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+        }
+
+        #rightSide {
+            left: 500px;
+            border-left: 1px solid;
+        }
+
+        body {
+            background: rgb(0, 255, 191);
+        }
+
+        h1 {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 50px;
+        }
+
+        p {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 30px;
+        }
+    </style>
+    </head>
+    <body onload="generateFaces()">
+        <h1>Matching Game</h1>
+        <p>Click on the extra smiling faces on the left side of the game!.</p>
+        <p>Good Luck, the best player wins!</p>
+        <div id= "leftSide"></div>
+        <div id= "rightSide"></div>
+        <script>
+            let numberOfFaces = 5;
+            const theLeftSide = document.getElementById("leftSide");
+            const theRightSide = document.getElementById("rightSide"); 
+            let numTries = 0;
+            function generateFaces() {
+                for (let i=0; i < numberOfFaces; i++) {
+                    let face = document.createElement("img");
+                    face.src = 'images/Siv1.jpg';
+                    let randomTop = Math.floor(Math.random() * 400) +1;
+                    let randomLeft = Math.floor(Math.random() * 400) +1;
+                    face.style.top = randomTop + 'px';
+                    face.style.left = randomLeft + 'px';
+                    theLeftSide.appendChild(face);
+                }
+                const leftSideImages = theLeftSide.cloneNode(true);
+                leftSideImages.removeChild(leftSideImages.lastChild);
+                theRightSide.appendChild(leftSideImages);
+
+                theLeftSide.lastChild.addEventListener('click', nextLevel);
+                document.body.addEventListener('click', gameOver);
+            }
+
+            function nextLevel() {
+                event.stopPropagation();
+                numberOfFaces += 5;
+                numTries += 1;
+                while(theLeftSide.firstChild) {
+                    theLeftSide.removeChild(theLeftSide.firstChild);
+                }
+                while(theRightSide.firstChild) {
+                    theRightSide.removeChild(theRightSide.firstChild);
+                }
+                generateFaces();
+            }
+
+            function gameOver() {
+                numTries += 1;
+               alert('Game Over!\n\nIt took you ' + numTries + ' attempts!\n\nHit OK to start over. ' + numTries + '  time(s) your doing great! Keep going!\n\nPlay it again!');
+               location.reload(); 
+               document.body.removeEventListener('click', gameOver);
+              theLeftSide.lastChild.removeEventListener('click on to next level', nextLevel); 
+            }
+        </script>
+    </body>
+
+
