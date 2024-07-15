@@ -1,2 +1,2 @@
 # facegame
-Siv's face game
+The face game
